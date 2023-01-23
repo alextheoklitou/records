@@ -1,42 +1,13 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import Record from './models/record.js'
 import { connectDb } from './db/helpers.js'
 import { port } from './config/environment.js'
+import router from './config/router.js'
 
 const app = express()
 
 app.use(express.json())
-
-app.use('/', (req, _res, next) => {
-  console.log(`🤖 Incoming Request: ${req.method} to ${req.url}`)
-  next()
-})
-
-app.get('/record', async (_req, res) => {
-  const records = await Record.find()
-  return res.status(200).json(records)
-})
-
-app.post('/record', async (req, res) => {
-  try {
-    const createdRecord = await Record.create(req.body)
-    return res.status(201).json(createdRecord)
-  } catch (err) {
-    return res.status(422).json(err)
-  }
-})
-
-app.get('/record/:recordId', async (req, res) => {
-  const { recordId } = req.params
-  try {
-    const recordToFind = await Record.findById(recordId)
-    if (!recordToFind) throw new Error()
-    return res.status(200).json(recordToFind)
-  } catch (err) {
-    return res.status(404).json({ message: 'Not Found' })
-  }
-})
+app.use('/api', router)
 
 mongoose.set('strictQuery', false)
 
