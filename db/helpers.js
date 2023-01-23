@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
+import { dbURI } from '../config/environment.js'
 
-const dbURI = 'mongodb://localhost/record-db'
 
 export function connectDb() {
   return mongoose.connect(dbURI, {

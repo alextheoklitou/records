@@ -1,10 +1,10 @@
 import express from 'express'
-import Record from './models/record.js'
 import mongoose from 'mongoose'
+import Record from './models/record.js'
 import { connectDb } from './db/helpers.js'
+import { port } from './config/environment.js'
 
 const app = express()
-const port = 4000
 
 app.use(express.json())
 
